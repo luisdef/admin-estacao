@@ -2,9 +2,8 @@ from tkinter import *
 from tkinter.font import Font
 from tkinter import ttk
 import mysql.connector as mysql
-from PIL import Image, ImageTk
 from dotenv import load_dotenv, dotenv_values
-
+from tkinter import messagebox
 
 root = Tk()
 root.iconbitmap('app_icon.ico')
@@ -38,7 +37,13 @@ class DB:
         self.conn.close()
 
 
+    def atualizar_dados_tempo(self):
+        self.get_dados_tempo()
+        messagebox.showinfo('Dados Atualizados', 'Dados foram atualizados de acordo com o Banco de Dados.')
+
+
     def get_dados_tempo(self):
+        self.listaUser.delete(*self.listaUser.get_children())
         self.conectar()
         self.cursor.execute(
             """
@@ -66,6 +71,7 @@ class App(DB):
         self.lista_estacao()
         self.lista_projetos()
         self.get_dados_tempo()
+        self.painel_edicao()
         self.root.mainloop()
 
 
@@ -95,6 +101,11 @@ class App(DB):
         self.abas.add(self.aba2, text='  Projetos  ')
 
         self.abas.place(relx=0, rely=0, relwidth=0.999, relheight=0.999)
+    
+
+    def painel_edicao(self):
+        self.atualizar = Button(self.aba1, text="Atualizar", command=self.atualizar_dados_tempo)
+        self.atualizar.place(relx=0.88, rely=0.14, relwidth=0.115, relheight=0.05)
     
 
     def lista_estacao(self):

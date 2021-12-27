@@ -1,3 +1,6 @@
+import sys
+import os
+
 if sys.platform.startswith('linux'):
     try:
         os.system("sudo apt install python3-pip -y")
@@ -12,8 +15,7 @@ elif sys.platform.startswith('win'):
     except OSError as error:
         print(error)
 
-import sys
-import os
+
 import zipfile
 from cx_Freeze import setup, Executable
 
@@ -55,4 +57,4 @@ zipdir('build\\Painel-Estacao', zipf)
 zipf.close()
 
 os.system("ren build\Painel-Estacao exe.win-amd64-3.10")
-os.system("build\exe.win-amd64-3.10\PainelEstacao.exe")
+os.system("cd build\exe.win-amd64-3.10 && PainelEstacao.exe")
