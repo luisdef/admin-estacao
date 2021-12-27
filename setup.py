@@ -1,9 +1,3 @@
-import sys
-import os
-import zipfile
-from cx_Freeze import setup, Executable
-
-
 if sys.platform.startswith('linux'):
     try:
         os.system("sudo apt install python3-pip -y")
@@ -17,6 +11,11 @@ elif sys.platform.startswith('win'):
         os.system("python -m pip install -r requirements.txt")
     except OSError as error:
         print(error)
+
+import sys
+import os
+import zipfile
+from cx_Freeze import setup, Executable
 
 
 build_exe_options = {"packages": ["os", "sys", "tkinter", "Tcl", "tk", "mysql", "dotenv"]}
