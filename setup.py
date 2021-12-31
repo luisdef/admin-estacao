@@ -15,7 +15,6 @@ elif sys.platform.startswith('win'):
     except OSError as error:
         print(error)
 
-
 import zipfile
 from cx_Freeze import setup, Executable
 
@@ -28,11 +27,11 @@ if sys.platform == "win32":
 
 setup(
     name = "Admin Estação",
-    version = "0.1",
+    version = "0.0.1-alpha",
     description = "Painel da Estação Meteorológica",
     options = {"build_exe": build_exe_options},
     executables = [
-        Executable("app/PainelEstacao.py", base=base, icon='app\\app_icon.ico')
+        Executable("PainelEstacao.py", base=base, icon='app_icon.ico')
     ]
 )
 
@@ -48,8 +47,9 @@ def zipdir(path, ziph):
                 )
             )
 
+
 os.system("copy .env build\exe.win-amd64-3.10")
-os.system("copy app\\app_icon.ico build\exe.win-amd64-3.10")
+os.system("copy app_icon.ico build\exe.win-amd64-3.10")
 os.system("ren build\exe.win-amd64-3.10 Painel-Estacao")
 
 zipf = zipfile.ZipFile('Painel-Estação.zip', 'w', zipfile.ZIP_DEFLATED)

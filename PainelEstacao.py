@@ -4,8 +4,10 @@ from tkinter import ttk
 import mysql.connector as mysql
 from dotenv import load_dotenv, dotenv_values
 from tkinter import messagebox
+from PIL import Image, ImageTk
 
 root = Tk()
+image_icon = ImageTk.PhotoImage(Image.open('app_icon.ico'))
 root.iconbitmap('app_icon.ico')
 
 font = Font(family='Verdana', size=9)
@@ -35,6 +37,16 @@ class DB:
     def desconectar(self):
         self.cursor.close()
         self.conn.close()
+
+    
+    def limpar_entries(self):
+        self.id_entry.delete(0, END);
+        self.data_entry.delete(0, END);
+        self.hora_entry.delete(0, END);
+        self.tempr_entry.delete(0, END);
+        self.umid_entry.delete(0, END);
+        self.pressao_entry.delete(0, END);
+        self.lum_entry.delete(0, END);
 
 
     def atualizar_dados_tempo(self):
@@ -70,7 +82,7 @@ class App(DB):
         self.widgets_frame()
         self.lista_estacao()
         self.lista_projetos()
-        self.get_dados_tempo()
+        # self.get_dados_tempo()
         self.painel_edicao()
         self.root.mainloop()
 
@@ -79,8 +91,9 @@ class App(DB):
         self.root.title('Painel da Estação Meteorológica')
         self.root.configure(background=cor_fundo)
         self.root.geometry('900x600')
+        # self.root.state('zoomed') # Fullscreen
         self.root.resizable(True, True)
-        self.root.minsize(width=700, height=500)
+        self.root.minsize(width=900, height=500)
 
     def frames(self):
         self.frame1 = Frame(self.root, bd=4, bg=cor_verde_principal,
@@ -104,8 +117,63 @@ class App(DB):
     
 
     def painel_edicao(self):
-        self.atualizar = Button(self.aba1, text="Atualizar", command=self.atualizar_dados_tempo)
+        # Labels e Entrys
+        self.title = Label(self.aba1, text='Consulta e edição dos dados da estação', bg=cor_fundo, font=font_bold)
+        self.title.place(relx=0.01, rely=0.01)
+
+
+        self.id = Label(self.aba1, text='ID', bg=cor_fundo, font=font)
+        self.id.place(relx=0.6, rely=0.01)
+        self.id_entry = Entry(self.aba1, font=font, bg=cor_fundo)
+        self.id_entry.place(relx=0.64, rely=0.01, relwidth=0.05, relheight=0.045)
+
+        self.data = Label(self.aba1, text='Data', bg=cor_fundo, font=font)
+        self.data.place(relx=0.01, rely=0.07)
+        self.data_entry = Entry(self.aba1, font=font)
+        self.data_entry.place(relx=0.055, rely=0.07, relwidth=0.1, relheight=0.045)
+
+        self.lum = Label(self.aba1, text='Luminosidade', bg=cor_fundo, font=font)
+        self.lum.place(relx=0.16, rely=0.07)
+        self.lum_entry = Entry(self.aba1, font=font)
+        self.lum_entry.place(relx=0.285, rely=0.07, relwidth=0.08, relheight=0.045)
+
+        self.pressao = Label(self.aba1, text='Pressão atm.', bg=cor_fundo, font=font)
+        self.pressao.place(relx=0.16, rely=0.14)
+        self.pressao_entry = Entry(self.aba1, font=font)
+        self.pressao_entry.place(relx=0.285, rely=0.14, relwidth=0.08, relheight=0.045)
+
+        self.hora = Label(self.aba1, text='Hora', bg=cor_fundo, font=font)
+        self.hora.place(relx=0.41, rely=0.07)
+        self.hora_entry = Entry(self.aba1, font=font)
+        self.hora_entry.place(relx=0.5, rely=0.07, relwidth=0.079, relheight=0.045)
+
+        self.umid = Label(self.aba1, text='Umidade', bg=cor_fundo, font=font)
+        self.umid.place(relx=0.01, rely=0.14)
+        self.umid_entry = Entry(self.aba1, font=font)
+        self.umid_entry.place(relx=0.09, rely=0.14, relwidth=0.064, relheight=0.045)
+
+        self.tempr = Label(self.aba1, text='Temperatura', bg=cor_fundo, font=font)
+        self.tempr.place(relx=0.38, rely=0.14)
+        self.tempr_entry = Entry(self.aba1, font=font)
+        self.tempr_entry.place(relx=0.5, rely=0.14, relwidth=0.08, relheight=0.045)
+
+        # Botoes
+        self.adicionar = Button(self.aba1, text="Adicionar", font=font,command=self.atualizar_dados_tempo)
+        self.adicionar.place(relx=0.6, rely=0.14, relwidth=0.115, relheight=0.05)
+        self.buscar = Button(self.aba1, text="Buscar", font=font,command=self.atualizar_dados_tempo)
+        self.buscar.place(relx=0.6, rely=0.07, relwidth=0.115, relheight=0.05)
+        self.limpar = Button(self.aba1, text="Limpar", font=font,command=self.limpar_entries)
+        self.limpar.place(relx=0.74, rely=0.01, relwidth=0.115, relheight=0.05)
+        self.apagar = Button(self.aba1, text="Apagar", font=font,command=self.atualizar_dados_tempo)
+        self.apagar.place(relx=0.74, rely=0.075, relwidth=0.115, relheight=0.05)
+        self.reescrever = Button(self.aba1, text="Reescrever", font=font,command=self.atualizar_dados_tempo)
+        self.reescrever.place(relx=0.74, rely=0.14, relwidth=0.115, relheight=0.05)
+        self.atualizar = Button(self.aba1, text="Atualizar", font=font,command=self.atualizar_dados_tempo)
         self.atualizar.place(relx=0.88, rely=0.14, relwidth=0.115, relheight=0.05)
+        
+        # Imagem logo
+        self.logo = Label(self.aba1, image=image_icon, bg=cor_fundo)
+        self.logo.place(relx=0.88, rely=0.01, relwidth=0.115, relheight=0.115)
     
 
     def lista_estacao(self):
@@ -116,21 +184,21 @@ class App(DB):
         self.listaUser = ttk.Treeview(self.aba1, height=3,
                                       column=('col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7'),
                                       style='mystyle.Treeview')
-        self.listaUser.heading('#0', text='', anchor=CENTER)
+        self.listaUser.heading('#0', text='')
         self.listaUser.heading('#1', text='ID')
         self.listaUser.heading('#2', text='Data')
         self.listaUser.heading('#3', text='Hora')
-        self.listaUser.heading('#4', text='Temperatura')
-        self.listaUser.heading('#5', text='Umidade')
-        self.listaUser.heading('#6', text='Pressão atm.')
-        self.listaUser.heading('#7', text='Luminosidade')
+        self.listaUser.heading('#4', text='Temperatura °C')
+        self.listaUser.heading('#5', text='Umidade %')
+        self.listaUser.heading('#6', text='Pressão atm. hPa')
+        self.listaUser.heading('#7', text='Luminosidade lm')
 
-        self.listaUser.column('#0', width=0)
-        self.listaUser.column('#1', width=0)
-        self.listaUser.column('#2', width=50)
-        self.listaUser.column('#3', width=50)
-        self.listaUser.column('#4', width=50)
-        self.listaUser.column('#5', width=50)
+        self.listaUser.column('#0', width=-100)
+        self.listaUser.column('#1', width=-30)
+        self.listaUser.column('#2', width=10)
+        self.listaUser.column('#3', width=0)
+        self.listaUser.column('#4', width=40)
+        self.listaUser.column('#5', width=10)
         self.listaUser.column('#6', width=50)
         self.listaUser.column('#7', width=50)
 
