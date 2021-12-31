@@ -6,13 +6,7 @@ from dotenv import load_dotenv, dotenv_values
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
-root = Tk()
-image_icon = ImageTk.PhotoImage(Image.open('app_icon.ico'))
-root.iconbitmap('app_icon.ico')
-
-font = Font(family='Verdana', size=9)
-font_bold = Font(family='Verdana', size=10, weight='bold')
-font_mono = Font(family='Inconsolata', size=10)
+login = Tk()
 
 cor_fundo = "#e9e9e9"
 cor_verde_principal = "#36b987"
@@ -25,6 +19,41 @@ HOST=values['HOST']
 DATABASE=values['DATABASE']
 USER=values['USER']
 PASSWORD=values['PASSWORD']
+
+
+class Login:
+    def __init__(self):
+        self.login_window = login
+        self.login_window.title('Login Estação Meteorológica')
+        self.login_window.geometry('400x150')
+        self.login_window.iconbitmap('app_icon.ico')
+        self.login_window.resizable(False, False)
+        self.widgets()
+        self.login_window.mainloop()
+    
+
+    def widgets(self):
+        self.nome_label = Label(self.login_window, text='Nome', font=Font(family='Verdana', size=11))
+        self.nome_label.place(relx=0.01, rely=0.01)
+        self.senha_label = Label(self.login_window, text='Senha', font=Font(family='Verdana', size=11))
+        self.senha_label.place(relx=0.01, rely=0.4)
+
+        self.nome = Entry(self.login_window, font=Font(family='Verdana', size=11))
+        self.nome.place(relx=0.01, rely=0.15, relwidth=0.98)
+        self.senha = Entry(self.login_window, font=Font(family='Verdana', size=11))
+        self.senha.place(relx=0.01, rely=0.55, relwidth=0.98)
+
+        self.send = Button(self.login_window, text="OK", font=Font(family='Verdana', size=11),
+                           command=self.test_credenciais)
+        self.send.place(relx=0.01, rely=0.75, relwidth=0.5)
+        self.cancel = Button(self.login_window, text="Cancelar", font=Font(family='Verdana', size=11),
+                             command=self.login_window.destroy)
+        self.cancel.place(relx=0.52, rely=0.75, relwidth=0.47)
+    
+
+    def test_credenciais(self):
+        self.login_window.destroy()
+        App()
 
 
 class DB:
@@ -74,26 +103,33 @@ class DB:
         self.desconectar()
         
 
-class App(DB):
+class App(DB, Login):
     def __init__(self):
-        self.root = root
+        self.root = Tk()
         self.tela()
+        self.fonts()
         self.frames()
         self.widgets_frame()
         self.lista_estacao()
         self.lista_projetos()
-        # self.get_dados_tempo()
+        self.get_dados_tempo()
         self.painel_edicao()
         self.root.mainloop()
-
 
     def tela(self):
         self.root.title('Painel da Estação Meteorológica')
         self.root.configure(background=cor_fundo)
         self.root.geometry('900x600')
+        self.image_icon = ImageTk.PhotoImage(Image.open('app_icon.ico'))
+        self.root.iconbitmap('app_icon.ico')
         # self.root.state('zoomed') # Fullscreen
         self.root.resizable(True, True)
         self.root.minsize(width=900, height=500)
+
+    def fonts(self):
+        self.font = Font(family='Verdana', size=9)
+        self.font_bold = Font(family='Verdana', size=10, weight='bold')
+        self.font_mono = Font(family='Inconsolata', size=10)
 
     def frames(self):
         self.frame1 = Frame(self.root, bd=4, bg=cor_verde_principal,
@@ -118,61 +154,61 @@ class App(DB):
 
     def painel_edicao(self):
         # Labels e Entrys
-        self.title = Label(self.aba1, text='Consulta e edição dos dados da estação', bg=cor_fundo, font=font_bold)
+        self.title = Label(self.aba1, text='Consulta e edição dos dados da estação', bg=cor_fundo, font=self.font_bold)
         self.title.place(relx=0.01, rely=0.01)
 
 
-        self.id = Label(self.aba1, text='ID', bg=cor_fundo, font=font)
+        self.id = Label(self.aba1, text='ID', bg=cor_fundo, font=self.font)
         self.id.place(relx=0.6, rely=0.01)
-        self.id_entry = Entry(self.aba1, font=font, bg=cor_fundo)
+        self.id_entry = Entry(self.aba1, font=self.font, bg=cor_fundo)
         self.id_entry.place(relx=0.64, rely=0.01, relwidth=0.05, relheight=0.045)
 
-        self.data = Label(self.aba1, text='Data', bg=cor_fundo, font=font)
+        self.data = Label(self.aba1, text='Data', bg=cor_fundo, font=self.font)
         self.data.place(relx=0.01, rely=0.07)
-        self.data_entry = Entry(self.aba1, font=font)
+        self.data_entry = Entry(self.aba1, font=self.font)
         self.data_entry.place(relx=0.055, rely=0.07, relwidth=0.1, relheight=0.045)
 
-        self.lum = Label(self.aba1, text='Luminosidade', bg=cor_fundo, font=font)
+        self.lum = Label(self.aba1, text='Luminosidade', bg=cor_fundo, font=self.font)
         self.lum.place(relx=0.16, rely=0.07)
-        self.lum_entry = Entry(self.aba1, font=font)
+        self.lum_entry = Entry(self.aba1, font=self.font)
         self.lum_entry.place(relx=0.285, rely=0.07, relwidth=0.08, relheight=0.045)
 
-        self.pressao = Label(self.aba1, text='Pressão atm.', bg=cor_fundo, font=font)
+        self.pressao = Label(self.aba1, text='Pressão atm.', bg=cor_fundo, font=self.font)
         self.pressao.place(relx=0.16, rely=0.14)
-        self.pressao_entry = Entry(self.aba1, font=font)
+        self.pressao_entry = Entry(self.aba1, font=self.font)
         self.pressao_entry.place(relx=0.285, rely=0.14, relwidth=0.08, relheight=0.045)
 
-        self.hora = Label(self.aba1, text='Hora', bg=cor_fundo, font=font)
+        self.hora = Label(self.aba1, text='Hora', bg=cor_fundo, font=self.font)
         self.hora.place(relx=0.41, rely=0.07)
-        self.hora_entry = Entry(self.aba1, font=font)
+        self.hora_entry = Entry(self.aba1, font=self.font)
         self.hora_entry.place(relx=0.5, rely=0.07, relwidth=0.079, relheight=0.045)
 
-        self.umid = Label(self.aba1, text='Umidade', bg=cor_fundo, font=font)
+        self.umid = Label(self.aba1, text='Umidade', bg=cor_fundo, font=self.font)
         self.umid.place(relx=0.01, rely=0.14)
-        self.umid_entry = Entry(self.aba1, font=font)
+        self.umid_entry = Entry(self.aba1, font=self.font)
         self.umid_entry.place(relx=0.09, rely=0.14, relwidth=0.064, relheight=0.045)
 
-        self.tempr = Label(self.aba1, text='Temperatura', bg=cor_fundo, font=font)
+        self.tempr = Label(self.aba1, text='Temperatura', bg=cor_fundo, font=self.font)
         self.tempr.place(relx=0.38, rely=0.14)
-        self.tempr_entry = Entry(self.aba1, font=font)
+        self.tempr_entry = Entry(self.aba1, font=self.font)
         self.tempr_entry.place(relx=0.5, rely=0.14, relwidth=0.08, relheight=0.045)
 
         # Botoes
-        self.adicionar = Button(self.aba1, text="Adicionar", font=font,command=self.atualizar_dados_tempo)
+        self.adicionar = Button(self.aba1, text="Adicionar", font=self.font,command=self.atualizar_dados_tempo)
         self.adicionar.place(relx=0.6, rely=0.14, relwidth=0.115, relheight=0.05)
-        self.buscar = Button(self.aba1, text="Buscar", font=font,command=self.atualizar_dados_tempo)
+        self.buscar = Button(self.aba1, text="Buscar", font=self.font,command=self.atualizar_dados_tempo)
         self.buscar.place(relx=0.6, rely=0.07, relwidth=0.115, relheight=0.05)
-        self.limpar = Button(self.aba1, text="Limpar", font=font,command=self.limpar_entries)
+        self.limpar = Button(self.aba1, text="Limpar", font=self.font,command=self.limpar_entries)
         self.limpar.place(relx=0.74, rely=0.01, relwidth=0.115, relheight=0.05)
-        self.apagar = Button(self.aba1, text="Apagar", font=font,command=self.atualizar_dados_tempo)
+        self.apagar = Button(self.aba1, text="Apagar", font=self.font,command=self.atualizar_dados_tempo)
         self.apagar.place(relx=0.74, rely=0.075, relwidth=0.115, relheight=0.05)
-        self.reescrever = Button(self.aba1, text="Reescrever", font=font,command=self.atualizar_dados_tempo)
+        self.reescrever = Button(self.aba1, text="Reescrever", font=self.font,command=self.atualizar_dados_tempo)
         self.reescrever.place(relx=0.74, rely=0.14, relwidth=0.115, relheight=0.05)
-        self.atualizar = Button(self.aba1, text="Atualizar", font=font,command=self.atualizar_dados_tempo)
+        self.atualizar = Button(self.aba1, text="Atualizar", font=self.font,command=self.atualizar_dados_tempo)
         self.atualizar.place(relx=0.88, rely=0.14, relwidth=0.115, relheight=0.05)
         
         # Imagem logo
-        self.logo = Label(self.aba1, image=image_icon, bg=cor_fundo)
+        self.logo = Label(self.aba1, image=self.image_icon, bg=cor_fundo)
         self.logo.place(relx=0.88, rely=0.01, relwidth=0.115, relheight=0.115)
     
 
@@ -242,4 +278,4 @@ class App(DB):
         self.scrollLista2.place(relx=0.96, rely=0.2, relwidth=0.035, relheight=0.78)
 
 if __name__ == '__main__':
-    App()
+    Login()
