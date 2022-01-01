@@ -1,5 +1,5 @@
 # Painel da Estação Meteorológica
-------------------
+
 Programa para administração da [Estação Meteorológica](https://estacao-ifrs.herokuapp.com/).
 Oferece painel de amplo acesso aos dados climáticos e informações sobre os conteúdos ali postados.
 
@@ -21,5 +21,4 @@ Oferece painel de amplo acesso aos dados climáticos e informações sobre os co
     ```
     Esse script irá compilar o código do programa e irá gerar um arquivo ZIP com o nome `Painel-Estação.zip`, o qual conterá os executáveis necessários para rodar o programa.
 
-<style> ins, .obs { font-size: 0.7rem; display: inline; } </style>
-<ins>Observação: </ins><span class="obs">Para rodar o programa e compilá-lo, é necessário o arquivo .env, que poderá ser acessado aqui: <a href="https://drive.google.com/file/d/1f_QTYBk_tyj4hs3YdJlKVgrmmF-5WMYc/view?usp=sharing">link</a>.</span>
+<ins>Observação:</ins> <span>Para rodar o programa e compilá-lo, é necessário o arquivo .env, que poderá ser acessado aqui: <a href="https://drive.google.com/drive/folders/19WiIqqZRgfHJs-nZdcB4cvmaPiXW7QUJ?usp=sharing">Google Drive</a>.</span>
