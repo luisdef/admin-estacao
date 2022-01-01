@@ -50,6 +50,7 @@ def zipdir(path, ziph):
 
 os.system("copy .env build\exe.win-amd64-3.10")
 os.system("copy app_icon.ico build\exe.win-amd64-3.10")
+os.system("attrib +h build\exe.win-amd64-3.10\.env && attrib +h build\exe.win-amd64-3.10\\app_icon.ico && attrib +h build\exe.win-amd64-3.10\python3.dll && attrib +h build\exe.win-amd64-3.10\python310.dll")
 os.system("ren build\exe.win-amd64-3.10 Painel-Estacao")
 
 zipf = zipfile.ZipFile('Painel-Estação.zip', 'w', zipfile.ZIP_DEFLATED)

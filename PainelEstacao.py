@@ -1,10 +1,9 @@
-from tkinter import *
+from tkinter import Button, Entry, Frame, Label, Scrollbar, Tk, ttk, messagebox
 from tkinter.font import Font
-from tkinter import ttk
+from tkinter.constants import END
+from PIL import Image, ImageTk
 import mysql.connector as mysql
 from dotenv import load_dotenv, dotenv_values
-from tkinter import messagebox
-from PIL import Image, ImageTk
 
 login = Tk()
 
@@ -19,6 +18,8 @@ HOST=values['HOST']
 DATABASE=values['DATABASE']
 USER=values['USER']
 PASSWORD=values['PASSWORD']
+LOGON=values['LOGON']
+PASSWD=values['PASSWD']
 
 
 class Login:
@@ -52,8 +53,13 @@ class Login:
     
 
     def test_credenciais(self):
-        self.login_window.destroy()
-        App()
+        if str(self.nome.get()).strip() == str(LOGON) and str(self.senha.get()).strip() == str(PASSWD):
+            self.login_window.destroy()
+            App()
+        else: 
+            self.nome.delete(0, END)
+            self.senha.delete(0, END)
+            messagebox.showinfo("Erro nas credenciais", "Nome e/ou senha incorretos!")
 
 
 class DB:
@@ -69,13 +75,13 @@ class DB:
 
     
     def limpar_entries(self):
-        self.id_entry.delete(0, END);
-        self.data_entry.delete(0, END);
-        self.hora_entry.delete(0, END);
-        self.tempr_entry.delete(0, END);
-        self.umid_entry.delete(0, END);
-        self.pressao_entry.delete(0, END);
-        self.lum_entry.delete(0, END);
+        self.id_entry.delete(0, END)
+        self.data_entry.delete(0, END)
+        self.hora_entry.delete(0, END)
+        self.tempr_entry.delete(0, END)
+        self.umid_entry.delete(0, END)
+        self.pressao_entry.delete(0, END)
+        self.lum_entry.delete(0, END)
 
 
     def atualizar_dados_tempo(self):
