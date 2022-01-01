@@ -7,6 +7,7 @@ Oferece painel de amplo acesso aos dados climáticos e informações sobre os co
 
 É possível a sua utilização com o interpretador Python direto na máquina, [baixar os executáveis](https://github.com/luisdef/admin-estacao/releases), ou fazer a própria compilação do código na máquina.
 
+É necessário estar dentro da pasta [`app`](https://github.com/luisdef/admin-estacao/tree/main/app) para realizar os comandos abaixo.
 - Para rodar com o interpretador:
     ```bash
     python.exe run.py
