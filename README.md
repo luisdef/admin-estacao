@@ -23,3 +23,6 @@ Oferece painel de amplo acesso aos dados climáticos e informações sobre os co
     Esse script irá compilar o código do programa e irá gerar um arquivo ZIP com o nome `Painel-Estação.zip`, o qual conterá os executáveis necessários para rodar o programa.
 
 <ins>Observação:</ins> <span>Para rodar o programa e compilá-lo, é necessário o arquivo .env, que poderá ser acessado aqui: <a href="https://drive.google.com/drive/folders/19WiIqqZRgfHJs-nZdcB4cvmaPiXW7QUJ?usp=sharing">Google Drive</a>.</span>
+
+### Licença
+- [MIT License](https://github.com/luisdef/admin-estacao/blob/main/LICENSE).
