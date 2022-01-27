@@ -4,6 +4,8 @@ from tkinter.constants import END
 from PIL import Image, ImageTk
 import mysql.connector as mysql
 from dotenv import load_dotenv, dotenv_values
+import os
+import sys
 
 login = Tk()
 
@@ -27,7 +29,8 @@ class Login:
         self.login_window = login
         self.login_window.title('Login Estação Meteorológica')
         self.login_window.geometry('400x150')
-        self.login_window.iconbitmap('app_icon.ico')
+        if sys.platform.startswith('win'):
+            self.login_window.iconbitmap('app_icon.ico')
         self.login_window.resizable(False, False)
         self.widgets()
         self.login_window.mainloop()
@@ -126,8 +129,9 @@ class App(DB, Login):
         self.root.title('Painel da Estação Meteorológica')
         self.root.configure(background=cor_fundo)
         self.root.geometry('900x600')
-        self.image_icon = ImageTk.PhotoImage(Image.open('app_icon.ico'))
-        self.root.iconbitmap('app_icon.ico')
+        if sys.platform.startswith('win'):
+            self.image_icon = ImageTk.PhotoImage(Image.open('app_icon.ico'))
+            self.root.iconbitmap('app_icon.ico')
         # self.root.state('zoomed') # Fullscreen
         self.root.resizable(True, True)
         self.root.minsize(width=900, height=500)
@@ -214,9 +218,10 @@ class App(DB, Login):
         self.atualizar.place(relx=0.88, rely=0.14, relwidth=0.115, relheight=0.05)
         
         # Imagem logo
-        self.logo = Label(self.aba1, image=self.image_icon, bg=cor_fundo)
-        self.logo.place(relx=0.88, rely=0.01, relwidth=0.115, relheight=0.115)
-    
+        if sys.platform.startswith('win'):
+            self.logo = Label(self.aba1, image=self.image_icon, bg=cor_fundo)
+            self.logo.place(relx=0.88, rely=0.01, relwidth=0.115, relheight=0.115)
+        
 
     def lista_estacao(self):
         self.style = ttk.Style()
