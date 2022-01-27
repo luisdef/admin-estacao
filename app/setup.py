@@ -12,7 +12,7 @@ if sys.platform.startswith('linux'):
 
 elif sys.platform.startswith('win'):
     try:
-        os.system("python -m psys.platform.startswith('win'):ip install -r requirements.txt")
+        os.system("python -m pip install -r requirements.txt")
     except OSError as error:
         print(error)
 
