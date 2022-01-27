@@ -7,7 +7,7 @@ def run():
         try:
             os.system("sudo apt install python3-pip -y")
             os.system("python3 -m pip3 install -r requirements.txt")
-            os.system("sudo apt install python3-tk")
+            os.system("sudo apt install python3-tk -y")
             os.system("python3 PainelEstacao.py")
         except OSError as error:
             print(error)
