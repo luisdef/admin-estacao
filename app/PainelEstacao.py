@@ -4,7 +4,6 @@ from tkinter.constants import END
 from PIL import Image, ImageTk
 import mysql.connector as mysql
 from dotenv import load_dotenv, dotenv_values
-import os
 import sys
 
 login = Tk()
