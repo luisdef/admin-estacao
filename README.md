@@ -1,4 +1,5 @@
-# Painel da Estação Meteorológica
+# Painel da Estação Meteorológica IFRS Campus Feliz
+<strong>********<i>Projeto em pausa</i></strong>
 
 Programa para administração da [Estação Meteorológica](https://estacao-ifrs.herokuapp.com/).
 Oferece painel de amplo acesso aos dados climáticos e informações sobre os conteúdos ali postados.
